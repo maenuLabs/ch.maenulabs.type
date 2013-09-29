@@ -1,0 +1,5 @@
+.*
+!.gitignore
+*.dia~
+node_modules/
+bin/

@@ -1,10 +1,10 @@
-/* global window, describe, it, beforeEach, expect, jasmine */
+/* global ch, describe, it, beforeEach, expect, jasmine */
 describe('Type', function () {
 
 	var Type;
 
 	beforeEach(function () {
-		Type = window.ch.maenulabs.type.Type;
+		Type = ch.maenulabs.type.Type;
 	});
 
 	describe('constructor contract', function () {

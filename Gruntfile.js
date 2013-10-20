@@ -6,13 +6,16 @@ module.exports = function(grunt) {
 				main: 'src/main',
 				test: 'src/test',
 			},
+			lib: {
+				main: 'lib/main',
+				test: 'lib/test',
+			},
 			bin: {
 				temporary: 'bin/temporary',
 				coverage: 'bin/coverage',
 				plato: 'bin/plato'
 			},
 			doc: 'doc',
-			lib: 'lib',
 			banner: '/**\n'
 					+ ' * <%= meta.package.name %> v<%= meta.package.version %>\n'
 					+ ' * built on ' + '<%= grunt.template.today("dd.mm.yyyy") %>\n'
@@ -33,12 +36,14 @@ module.exports = function(grunt) {
 		jasmine: {
 			normal: {
 				src: [
-					'<%= meta.src.main %>/js/**/*.js'
+					'<%= meta.src.main %>/js/**/initialize.js',
+					'<%= meta.src.main %>/js/**/!(initialize).js'
 				]
 			},
 			coverage: {
 				src: [
-					'<%= meta.src.main %>/js/**/*.js',
+					'<%= meta.src.main %>/js/**/initialize.js',
+					'<%= meta.src.main %>/js/**/!(initialize).js'
 				],
 				options: {
 					template: require('grunt-template-jasmine-istanbul'),
@@ -62,7 +67,8 @@ module.exports = function(grunt) {
 		concat: {
 			type: {
 				src: [
-					'<%= meta.src.main %>/js/**/*.js'
+					'<%= meta.src.main %>/js/**/initialize.js',
+					'<%= meta.src.main %>/js/**/!(initialize).js'
 				],
 				dest: '<%= meta.bin.temporary %>/<%= meta.package.name %>.js'
 			},

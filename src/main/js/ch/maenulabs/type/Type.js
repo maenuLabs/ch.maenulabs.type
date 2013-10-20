@@ -1,17 +1,5 @@
-/**
- * @module ch.maenulabs.type
- */
 (function () {
-	/* global window */
-	if (!window.ch) {
-		window.ch = {};
-	}
-	if (!window.ch.maenulabs) {
-		window.ch.maenulabs = {};
-	}
-	if (!window.ch.maenulabs.type) {
-		window.ch.maenulabs.type = {};
-	}
+	/* global ch */
 	/**
 	 * Gets a base object that will execute all methods in the instance context.
 	 *
@@ -63,7 +51,7 @@
 	 * @param {Object} [instanceProperties={}] The instance properties
 	 * @param {Object} [typeProperties={}] The type properties
 	 */
-	window.ch.maenulabs.type.Type = function (baseType, instanceProperties,
+	ch.maenulabs.type.Type = function (baseType, instanceProperties,
 			typeProperties) {
 		// set to default values if necessary
 		baseType = baseType || Object;

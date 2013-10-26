@@ -61,7 +61,8 @@ module.exports = function(grunt) {
 				}
 			},
 			options: {
-				specs: '<%= meta.src.test %>/js/**/*.js'
+				specs: '<%= meta.src.test %>/js/**/*.js',
+				vendor: []
 			}
 		},
 		concat: {

@@ -45,7 +45,7 @@
 	 * Creates a type.
 	 *
 	 * @constructor
- 	 * @class Type
+	 * @class Type
 	 *
 	 * @param {Function} [baseType=Object] The base type
 	 * @param {Object} [instanceProperties={}] The instance properties

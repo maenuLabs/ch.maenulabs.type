@@ -1,7 +1,7 @@
 /* global ch, describe, it, beforeEach, expect, jasmine */
 describe('Type', function () {
 
-	var Type;
+	var Type = null;
 
 	beforeEach(function () {
 		Type = ch.maenulabs.type.Type;
@@ -43,7 +43,7 @@ describe('Type', function () {
 		describe('without base type, without instance properties, '
 				+ 'without type properties', function () {
 
-			var A;
+			var A = null;
 
 			beforeEach(function () {
 				A = new Type();
@@ -65,7 +65,7 @@ describe('Type', function () {
 
 			describe('instance', function () {
 
-				var a;
+				var a = null;
 
 				beforeEach(function () {
 					a = new A();
@@ -82,7 +82,7 @@ describe('Type', function () {
 
 				it('should set base type of the object to the base type '
 						+ 'of the type', function () {
-					expect(a.baseType).toBe(A.baseType);
+					expect(a.type.baseType).toBe(A.baseType);
 				});
 
 			});
@@ -92,7 +92,7 @@ describe('Type', function () {
 		describe('with base type, without instance properties, '
 				+ 'without type properties', function () {
 
-			var A;
+			var A = null;
 
 			beforeEach(function () {
 				A = new Type(Date);
@@ -194,8 +194,8 @@ describe('Type', function () {
 
 	describe('inheritance', function () {
 
-		var A;
-		var B;
+		var A = null;
+		var B = null;
 
 		beforeEach(function () {
 			A = new Type(Date, {
@@ -233,7 +233,7 @@ describe('Type', function () {
 
 		describe('instance properties', function () {
 
-			var b;
+			var b = null;
 
 			beforeEach(function () {
 				b = new B(3);
@@ -310,7 +310,7 @@ describe('Type', function () {
 
 		describe('complex inheritance', function () {
 
-			var C;
+			var C = null;
 
 			beforeEach(function () {
 				A = new Type(Date, {

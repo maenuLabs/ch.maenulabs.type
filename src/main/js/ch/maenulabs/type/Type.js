@@ -4,16 +4,17 @@
 	 * Gets a base object that will execute all methods in the instance context.
 	 *
 	 * @private
+	 * @static
 	 * @method getBase
 	 *
 	 * @param {Object} methods A map of methods mapped to their names
 	 * @param {Object} instance The instance to execute the methods in
-	 * @param {Function} getSuper Gets the super methods
+	 * @param {Function} getSuperMethods Gets the super methods
 	 *
 	 * @return {Function} A base function that return the function of the
 	 *     methods with the specified name
 	 */
-	var getBase = function (methods, instance, getSuper) {
+	var getBase = function (methods, instance, getSuperMethods) {
 		return function (method) {
 			var currentMethods = methods;
 			// build lookup chain
@@ -21,7 +22,7 @@
 			while (currentMethods) {
 				lookupChain.push(currentMethods);
 				try {
-					currentMethods = getSuper(currentMethods);
+					currentMethods = getSuperMethods(currentMethods);
 				} catch (error) {
 					// hit rock bottom
 					break;
@@ -43,6 +44,17 @@
 	};
 	/**
 	 * Creates a type.
+	 * 
+	 * A type is a factory that generates instances of it. This implementation
+	 * is similar to SmallTalk classes.
+	 * 
+	 * Both instance and type properties can have an 'initialize' method, which
+	 * is called when the instance or the type is instantiated. Each instance of
+	 * a type has a 'type' property that refers its type. The type has a
+	 * 'baseType' property that refers to its base type. Both an instance of a
+	 * type and a type has a 'base' method, that takes a method name and returns
+	 * the method of that name of the base type which will be executed in the
+	 * context of the instance.
 	 *
 	 * @constructor
 	 * @class Type
@@ -54,7 +66,7 @@
 	ch.maenulabs.type.Type = function (baseType, instanceProperties,
 			typeProperties) {
 		// set to default values if necessary
-		baseType = baseType || Object;
+		baseType = baseType || Object;
 		instanceProperties = instanceProperties || {};
 		typeProperties = typeProperties || {};
 		// the instance constructor
@@ -71,7 +83,7 @@
 		}
 		var type = function () {
 			this.base = getBase(this, this, function (thisPrototype) {
-				return thisPrototype.baseType.prototype;
+				return thisPrototype.type.baseType.prototype;
 			});
 			instanceConstructor.apply(this, arguments);
 		};
@@ -88,7 +100,6 @@
 		}
 		type.prototype.constructor = type;
 		type.prototype.type = type;
-		type.prototype.baseType = baseType;
 		// the type constructor
 		var typeConstructor = typeProperties.initialize;
 		if (!typeConstructor) {

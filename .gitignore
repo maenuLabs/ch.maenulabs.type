@@ -3,3 +3,4 @@
 *.dia~
 node_modules/
 bin/
+doc/

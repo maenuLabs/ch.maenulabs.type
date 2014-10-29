@@ -166,10 +166,11 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-plato');
+
+	grunt.registerTask('test-normal', 'jasmine:normal');
+	grunt.registerTask('test-coverage', 'jasmine:coverage');
 	
-	grunt.registerTask('check', ['plato:src', 'plato:test', 'jshint:main', 'jshint:test']);
-	grunt.registerTask('test', 'jasmine:normal');
-	grunt.registerTask('test:coverage', 'jasmine:coverage');
-	grunt.registerTask('doc', 'yuidoc:type');
-	grunt.registerTask('min', ['concat:type', 'uglify:type']);
+	grunt.registerTask('build-check', ['plato:src', 'plato:test', 'jshint:main', 'jshint:test']);
+	grunt.registerTask('build-documentation', 'yuidoc:type');
+	grunt.registerTask('build-module', ['concat:type', 'uglify:type']);
 };

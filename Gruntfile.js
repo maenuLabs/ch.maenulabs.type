@@ -11,7 +11,6 @@ module.exports = function(grunt) {
 				test: 'lib/test',
 			},
 			bin: {
-				temporary: 'bin/temporary',
 				coverage: 'bin/coverage',
 				plato: 'bin/plato'
 			},
@@ -71,7 +70,7 @@ module.exports = function(grunt) {
 					'<%= meta.src.main %>/js/**/initialize.js',
 					'<%= meta.src.main %>/js/**/!(initialize).js'
 				],
-				dest: '<%= meta.bin.temporary %>/<%= meta.package.name %>.js'
+				dest: '<%= meta.package.name %>.js'
 			},
 		},
 		uglify: {
@@ -80,7 +79,7 @@ module.exports = function(grunt) {
 			},
 			type: {
 				files: {
-					'<%= meta.bin.temporary %>/<%= meta.package.name %>-<%= meta.package.version %>.min.js': '<%= meta.bin.temporary %>/<%= meta.package.name %>.js'
+					'<%= meta.package.name %>.min.js': '<%= meta.package.name %>.js'
 				}
 			} 
 		},
@@ -173,4 +172,6 @@ module.exports = function(grunt) {
 	grunt.registerTask('build-check', ['plato:src', 'plato:test', 'jshint:main', 'jshint:test']);
 	grunt.registerTask('build-documentation', 'yuidoc:type');
 	grunt.registerTask('build-module', ['concat:type', 'uglify:type']);
+	
+	grunt.registerTask('build', ['clean:bin', 'clean:doc', 'build-check', 'build-documentation', 'build-module']);
 };

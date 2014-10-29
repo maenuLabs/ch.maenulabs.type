@@ -8,6 +8,7 @@
   "author": {
     "name": "Manuel Leuenberger"
   },
+  "repository": "https://github.com/maenuLabs/ch.maenulabs.type",
   "dependencies": {},
   "devDependencies": {
     "grunt": "~0.4.0",

@@ -33,12 +33,21 @@
 	 *     methods with the specified name
 	 */
 	var getBase = function (methods, instance, getSuperMethods) {
-		return function (method) {
+		return function (methodName) {
 			var currentMethods = methods;
 			// build lookup chain
 			var lookupChain = [];
 			while (currentMethods) {
-				lookupChain.push(currentMethods);
+				var currentMethod = currentMethods[methodName];
+				// don't add if inherited
+				if (lookupChain.length === 0) {
+					lookupChain.push(currentMethod);
+				} else {
+					var previousMethod = lookupChain[lookupChain.length - 1];
+					if (currentMethod != previousMethod) {
+						lookupChain.push(currentMethod);
+					}
+				}
 				try {
 					currentMethods = getSuperMethods(currentMethods);
 				} catch (error) {
@@ -47,16 +56,12 @@
 				}
 			}
 			// determine position in lookup chain
-			while (lookupChain.shift()[method] != arguments.callee.caller) {
+			while (lookupChain.shift() != arguments.callee.caller) {
 				// traverse
 			}
-			currentMethods = lookupChain.shift();
-			// find method
-			while (!currentMethods[method]) {
-				currentMethods = lookupChain.shift();
-			}
+			var method = lookupChain.shift();
 			return function () {
-				return currentMethods[method].apply(instance, arguments);
+				return method.apply(instance, arguments);
 			};
 		};
 	};
@@ -111,6 +116,7 @@
 		// default initialize, may be overridden
 		type.prototype.initialize = instanceConstructor;
 		for (var instanceProperty in instanceProperties) {
+			/* istanbul ignore else */
 			if (instanceProperties.hasOwnProperty(instanceProperty)) {
 				type.prototype[instanceProperty] = instanceProperties[
 						instanceProperty];
@@ -131,12 +137,14 @@
 		}
 		// copy base type properties
 		for (var baseTypeProperty in baseType) {
+			/* istanbul ignore else */
 			if (baseType.hasOwnProperty(baseTypeProperty)) {
 				type[baseTypeProperty] = baseType[baseTypeProperty];
 			}
 		}
 		// set type properties
 		for (var typeProperty in typeProperties) {
+			/* istanbul ignore else */
 			if (typeProperties.hasOwnProperty(typeProperty)) {
 				type[typeProperty] = typeProperties[typeProperty];
 			}

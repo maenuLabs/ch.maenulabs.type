@@ -363,6 +363,50 @@ describe('Type', function () {
 
 		});
 
+		describe('very complex inheritance', function () {
+
+			var C = null;
+			var D = null;
+			var E = null;
+
+			beforeEach(function () {
+				A = new Type(Object, {
+					act: function () {
+						this.a = true;
+					}
+				});
+				B = new Type(A, {
+					act: function () {
+						this.base('act')();
+						this.b = true;
+					}
+				});
+				C = new Type(B, {});
+				D = new Type(C, {
+					act: function () {
+						this.base('act')();
+						this.d = true;
+					}
+				});
+				E = new Type(D, {
+					act: function () {
+						this.base('act')();
+						this.e = true;
+					}
+				});
+			});
+
+			it('should work', function () {
+				var instance = new E();
+				instance.act();
+				expect(instance.a).toBeDefined();
+				expect(instance.b).toBeDefined();
+				expect(instance.d).toBeDefined();
+				expect(instance.e).toBeDefined();
+			});
+
+		});
+
 	});
 
 });
